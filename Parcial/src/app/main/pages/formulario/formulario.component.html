@@ -1,0 +1,62 @@
+<div class="container" [ngSwitch]="showInfo">
+	<!--Le agrego <ng-container> al form para condicionarlo y mostrarlo con nuestra variable bandera showInfo -->
+	<ng-container *ngSwitchCase="false">
+
+		<h3>Formulario de carga de datos</h3>
+
+		<!--Le enlazo al form nuestra variable "form" con la etiqueta de asignacion [formGroup]-->
+		<!--Le enlazo al form nuestra evento "showData()" con la etiqueta de evento (ngSubmit)-->
+		<!--Si le pongo "invalidate" descativa todas las validaciones propias de HTML para el form-->
+		<form [formGroup]="form" class="col-12" (ngSubmit)="agregarPersona()" invalidate>
+			<div class="row">
+				<div class="col-12 text-left"><b class="text-secondary">Datos Personales</b></div>
+			</div>
+			<div class="row">
+				<div class="col-12 col-md-6 mb-3">
+					<label for="icod_tipo_servicio">Apellido</label>
+
+					<!--Utilizo formControlName para conectarlo con la variable "apellido"-->
+
+					<input type="text" id="icod_tipo_servicio" formControlName="cod_tipo_servicio" class="form-control"
+						placeholder="Ingresa tu apellido" value="" maxlength="100">
+					<!--Pongo lo siguiente en la directiva *ngIf para validar. Si el error tipo required de apellido es true, 
+						Y si submitted(nuestra flag) es true muestro el mensaje
+						Si no no lo muestro, ya que o todavia no hice submit o no encontro el error-->
+					<div class="text-danger" *ngIf="submitted && form.controls['cod_tipo_servicio'].errors?.['required']">
+						Debes informar tu apellido.
+					</div>
+
+
+					<div class="col-12 col-md-6 mb-3">
+						<label for="itiposervicio">Tipo de Servicio</label>
+						<select id="itiposervicio" formControlName="codTipoServicio" class="form-select">
+							<option *ngFor="let n of tipo_servicios" [value]="n.codTipoServicio">{{n.tipoServicio}}</option>
+						</select>
+					</div>
+
+
+
+				</div>
+				
+			</div>
+			
+
+				<!--Esta vez no es un formControlName, debo generar un array, por eso busco el div que contenga todos los checkbox y le pongo un formArrayName-->
+				<!--Le borramos el -name- a los imputs-->
+				
+			<div class="row">
+				<div class="col-12">
+					<button type="submit" class="btn btn-success">Mostrar datos</button>
+					<!--Le paso el metodo reset cuando hace click, para que borre nuestras banderas y reinice el form-->
+					<button type="button" class="btn btn-danger ms-2" (click)="reset()">Limpiar formulario</button>
+				</div>
+			</div>
+		</form>
+	</ng-container>
+
+	<ng-container *ngSwitchCase="true">
+		<h3>¡Gracias {{form.controls['apellido'].value}}, {{form.controls['nombre'].value}}!</h3>
+		<br>
+		<button type="button" class="btn btn-info" (click)="back()">Volver</button>
+	</ng-container>
+</div>

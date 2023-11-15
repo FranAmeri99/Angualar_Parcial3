@@ -1,0 +1,26 @@
+
+<div class="container mt-4">
+
+    <h3>Registro de Personas</h3>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Género</th>
+          <th>Correo</th>
+          <th>Nacionalidad</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let persona of personas">
+              <td>{{ persona.apellido }}</td>
+              <td>{{ persona.nombre }}</td>
+              <td>{{ persona.nomGenero }}</td>
+              <td>{{ persona.correo }}</td>
+              <td>{{ persona.nomNacionalidad }}</td>
+          </tr>
+      </tbody>
+  </table>
+  <button class="btn btn-success mr-2" routerLink="formulario">Nuevo</button>
+  </div>
